@@ -12,6 +12,6 @@ spec:
     targetRevision: 5.17.0  # актуальная версия на апрель 2025
   destination:
     server: https://kubernetes.default.svc
-    namespace: monitoring
+    namespace: kube-metrics
   syncPolicy:
     automated: {}
