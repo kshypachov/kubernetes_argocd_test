@@ -8,12 +8,25 @@ spec:
   source:
     repoURL: https://helm.releases.hashicorp.com
     chart: vault
-    targetRevision: 0.27.0  # актуальную версию можно проверить через helm
+    targetRevision: 0.27.0
     helm:
       values: |
         server:
           dev:
+            enabled: false
+          ha:
             enabled: true
+            replicas: 3
+          dataStorage:
+            enabled: true
+            size: 10Gi
+            storageClass: longhorn  # замени на актуальный, если нужно
+        ui:
+          enabled: true
+        injector:
+          enabled: false
+        ingress:
+          enabled: false  # теперь управление через отдельный манифест
   destination:
     server: https://kubernetes.default.svc
     namespace: vault
