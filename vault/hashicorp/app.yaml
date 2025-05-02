@@ -14,19 +14,35 @@ spec:
         server:
           dev:
             enabled: false
+
           ha:
             enabled: true
-            replicas: 3
+            raft:
+              enabled: true
+              config: |
+                ui = true
+                listener "tcp" {
+                  address = "0.0.0.0:8200"
+                  tls_disable = 1
+                }
+                storage "raft" {
+                  path = "/vault/data"
+                }
+                disable_mlock = true
+
           dataStorage:
             enabled: true
             size: 10Gi
-            storageClass: longhorn  # замени на актуальный, если нужно
+            storageClass: longhorn
+
         ui:
           enabled: true
+
+        ingress:
+          enabled: false
+
         injector:
           enabled: false
-        ingress:
-          enabled: false  # теперь управление через отдельный манифест
   destination:
     server: https://kubernetes.default.svc
     namespace: vault
