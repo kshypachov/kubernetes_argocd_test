@@ -12,9 +12,6 @@ spec:
     helm:
       values: |
         server:
-          dev:
-            enabled: false
-
           ha:
             enabled: true
             raft:
@@ -25,7 +22,6 @@ spec:
                   address = "0.0.0.0:8200"
                   tls_disable = 1
                 }
-
                 storage "raft" {
                   path = "/vault/data"
                   retry_join {
@@ -38,8 +34,12 @@ spec:
                     leader_api_addr = "http://vault-2.vault-internal:8200"
                   }
                 }
-
                 disable_mlock = true
+
+        service:
+          enabled: true
+          headless:
+            enabled: true
 
           dataStorage:
             enabled: true
